@@ -1,0 +1,38 @@
+name: RK3566 Linux and rootfs build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rk3566-linux-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            bc bison build-essential ca-certificates curl device-tree-compiler \
+            flex gcc-aarch64-linux-gnu jq kmod libc6-dev-arm64-cross libelf-dev libssl-dev \
+            python3 rsync xz-utils
+      - name: Build Linux kernel and modules
+        run: tools/build-kernel.sh
+      - name: Assemble Ubuntu Base rootfs
+        run: sudo tools/build-ubuntu-base-rootfs.sh
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: tspi-linux-${{ github.run_id }}
+          path: |
+            build/artifacts/tspi-linux-6.18.62/
+            !build/artifacts/tspi-linux-6.18.62/modules/
+          if-no-files-found: error
+          retention-days: 14

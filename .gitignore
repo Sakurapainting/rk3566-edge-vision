@@ -1,0 +1,11 @@
+/build/
+/sources/
+/backups/
+/evidence/
+/hardware.md
+/recovery.md
+
+# This repository tracks the reproducible kernel and rootfs build path.
+/tools/*
+!/tools/build-kernel.sh
+!/tools/build-ubuntu-base-rootfs.sh
