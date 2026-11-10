@@ -2,7 +2,7 @@
 
 This repository builds an ARM64 Linux kernel and a minimal Ubuntu Base rootfs for the LCSC Taishan Pi RK3566 board family.
 
-The build inputs are pinned in `config/versions.env`. Run `tools/build-kernel.sh` followed by `sudo tools/build-ubuntu-base-rootfs.sh` for a local build, or dispatch the `RK3566 Linux and rootfs build` workflow from the GitHub Actions page. The workflow uploads a 14-day artifact containing the kernel image, candidate DTB, modules, rootfs archive, build metadata, and SHA256 checksums.
+The build inputs are pinned in `config/versions.env`. The GitHub Actions artifact is the canonical build output for deployment; local build scripts are available for comparison and troubleshooting. The manual `RK3566 Linux and rootfs build` workflow uploads a 14-day artifact containing the kernel image, candidate DTB, modules, rootfs archive, build metadata, and SHA256 checksums. Download and verify `SHA256SUMS` before use, and archive any output needed beyond the artifact retention period.
 
 The DTB is an upstream board-family candidate and has not been validated against the exact PCB revision. The rootfs is a tar archive with a temporary serial root shell; it is not a partition image or a production system. No artifact in this repository has been booted on the board.
 

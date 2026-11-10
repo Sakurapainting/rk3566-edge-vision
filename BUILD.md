@@ -19,7 +19,11 @@ rootfs 脚本需要 root 或 user namespace，以保留归档中的 ARM64 rootfs
 
 ## GitHub Actions
 
-`.github/workflows/build-linux.yml` 提供 `workflow_dispatch` 手动任务：安装依赖、构建内核和模块、组装 Ubuntu Base rootfs，并将产物作为 14 天 artifact 上传。推送到 GitHub 后，可在仓库的 Actions 页面手动运行 `RK3566 Linux and rootfs build`。
+`.github/workflows/build-linux.yml` 提供 `workflow_dispatch` 手动任务：安装依赖、构建内核和模块、组装 Ubuntu Base rootfs，并将产物作为 14 天 artifact 上传。后续部署以 Actions 运行产物为准；本地编译仅用于需要时的对照或故障排查。
+
+2026-11-10 首次云端构建通过，运行 ID `42811216799`，artifact 名为 `tspi-linux-42811216799`。下载 ZIP 后先在解压目录执行 `sha256sum -c SHA256SUMS`。该 artifact 计划于 2026-11-24 过期；需要长期保留的版本应提前下载并另行归档。
+
+云端产物包含 `Image`、候选 DTB、模块包、Ubuntu Base rootfs tar、`kernel.config`、`System.map`、`Module.symvers`、kernel release、构建清单和 `SHA256SUMS`。Git 仓库中的 `config/`、构建脚本和 `rootfs/init.c` 是重建输入，不能当作生成产物删除。
 
 rootfs 是下载已编译好的 Ubuntu Base ARM64、加入匹配模块和静态 PID 1 后打包；它不从源代码编译完整 Ubuntu 用户态。
 
