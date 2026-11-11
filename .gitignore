@@ -9,3 +9,11 @@
 /tools/*
 !/tools/build-kernel.sh
 !/tools/build-ubuntu-base-rootfs.sh
+!/tools/build-diag-ram-init.py
+!/tools/build-ubuntu-ram-initramfs.py
+!/tools/repair-initramfs-directory-order.py
+!/tools/check-initramfs-ordered-extraction.py
+
+!/tools/build-emmc-rootfs.sh
+!/tools/build-emmc-boot.py
+!/tools/package-emmc-deploy.py
